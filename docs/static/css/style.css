@@ -1,0 +1,133 @@
+/* static/css/style.css */
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f7f7f7;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: 80%;
+  max-width: 800px;
+  margin: 40px auto;
+  background: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+h2 {
+  color: #004d40;
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button, .btn {
+  background: #004d40;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin: 20px 5px 0;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+button:hover, .btn:hover {
+  background: #00796b;
+}
+
+.btns-group {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Progress Bar */
+.progressbar {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  margin-bottom: 30px;
+  counter-reset: step;
+}
+
+.progressbar::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  height: 4px;
+  width: 100%;
+  background-color: #dcdcdc;
+  z-index: -1;
+}
+
+.progress-step {
+  width: 25px;
+  height: 25px;
+  background-color: #dcdcdc;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.progress-step::before {
+  counter-increment: step;
+  content: counter(step);
+  position: absolute;
+  top: -30px;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.progress-step.active {
+  background-color: #004d40;
+  color: white;
+}
+
+.form-step {
+  display: none;
+}
+
+.form-step.active {
+  display: block;
+}
+
+.btn-export {
+  display: inline-block;
+  padding: 8px 14px;
+  background: #006a4d;
+  color: #fff;
+  border-radius: 4px;
+  text-decoration: none;
+  margin-bottom: 15px;
+}
+.btn-export:hover {
+  background: #004d36;
+}
+
+.demo-banner {
+  background-color: #ffcc00;
+  color: #333;
+  text-align: center;
+  padding: 10px;
+  font-weight: bold;
+  border-bottom: 2px solid #e6b800;
+}

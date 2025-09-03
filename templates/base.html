@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Sunshine Coast Council – Event Application{% endblock %}</title>
+
+  <!-- Your main stylesheet -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+  <!-- Optional: provide Google Maps API key via meta (JS will pick it up). If empty, Leaflet is used. -->
+  {% if gmaps_api_key %}
+  <meta name="gmaps-api-key" content="{{ gmaps_api_key }}">
+  {% endif %}
+
+  <!-- Leaflet (free) - always load so we have a fallback if no Google key -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+</head>
+<body>
+
+  <header class="site-header">
+    <a href="{{ url_for('index') }}">
+      <img src="{{ url_for('static', filename='images/council_logo.png') }}" class="logo" alt="Council Logo">
+    </a>
+    <h1 class="site-title">Sunshine Coast Council – Event Permit Application</h1>
+  </header>
+
+  <main class="site-main">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- JS libs (Leaflet first; Google is loaded dynamically in form.js only if key present) -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+
+  <!-- Your app JS -->
+  <script src="{{ url_for('static', filename='js/form.js') }}"></script>
+<!-- Floating Chat Button + Panel -->
+<style>
+  .chat-toggle {
+    position: fixed; right: 18px; bottom: 18px;
+    width: 56px; height: 56px; border-radius: 50%;
+    background: #00695c; color: #fff; border: none;
+    box-shadow: 0 8px 20px rgba(0,0,0,.2); cursor: pointer;
+    font-size: 20px;
+  }
+  .chatbox {
+    position: fixed; right: 18px; bottom: 86px; width: 320px; max-height: 60vh;
+    background: #fff; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,.18);
+    display: none; flex-direction: column; overflow: hidden;
+  }
+  .chatbox.open { display: flex; }
+  .chatbox header {
+    background: #004d40; color:#fff; padding: 10px 12px; font-weight: 600;
+  }
+  .chatbox .thread {
+    padding: 10px; overflow-y: auto; flex: 1; background: #fafafa;
+  }
+  .chat-bubble { padding: 8px 10px; border-radius: 10px; margin: 6px 0; max-width: 85%; white-space: pre-wrap; }
+  .chat-bubble.user { background: #e3f2fd; margin-left: auto; }
+  .chat-bubble.bot  { background: #f1f8e9; margin-right: auto; }
+  .chatbox form { display:flex; gap:6px; padding: 10px; border-top: 1px solid #eee; background:#fff; }
+  .chatbox input { flex: 1; padding: 8px 10px; border: 1px solid #ddd; border-radius: 8px; }
+  .chatbox button[type=submit] { padding: 8px 12px; border: none; border-radius: 8px; background:#00695c; color:#fff; }
+</style>
+
+<button id="chat-toggle" class="chat-toggle" title="Ask a question">💬</button>
+<div id="chatbox" class="chatbox" role="dialog" aria-label="Chat">
+  <header>Event Assistant</header>
+  <div id="chat-thread" class="thread">
+    <div class="chat-bubble bot">Hi! Ask me about event types, locations, or availability.</div>
+  </div>
+  <form id="chat-form" autocomplete="off">
+    <input id="chat-input" type="text" placeholder="Type a question…" />
+    <button type="submit">Send</button>
+  </form>
+</div>
+
+<script src="{{ url_for('static', filename='js/chatbot.js') }}"></script>
+
+
+</body>
+</html>

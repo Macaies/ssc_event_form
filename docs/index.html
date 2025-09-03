@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sunshine Coast Council - Event Permit Application</title>
+  <!--<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> -->
+ <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+
+  <div class="demo-banner">This is a demo version. Form submission is disabled.</div>
+  <div class="container">
+    <!-- Progress Bar -->
+    <div class="progressbar">
+      <div class="progress-step active" data-title="Applicant"></div>
+      <div class="progress-step" data-title="Event"></div>
+      <div class="progress-step" data-title="Operations"></div>
+      <div class="progress-step" data-title="Logistics"></div>
+      <div class="progress-step" data-title="Community"></div>
+      <div class="progress-step" data-title="Declaration"></div>
+    </div>
+
+    <!-- Form -->
+   <!-- <form action="{{ url_for('submit') }}" method="POST" enctype="multipart/form-data" id="multiStepForm"> -->
+    <form id="multiStepForm">
+
+      <!-- Step 1: Applicant Details -->
+      <div class="form-step active">
+        <h2>Step 1: Applicant Details & Insurance</h2>
+        <label>Applicant Name</label>
+        <input type="text" name="applicant_name" required>
+        <label>ABN</label>
+        <input type="text" name="abn">
+        <label>Contact Name</label>
+        <input type="text" name="contact_name" required>
+        <label>Email</label>
+        <input type="email" name="email" required>
+        <label>Phone</label>
+        <input type="tel" name="phone" required>
+        <label>Upload Insurance Certificate</label>
+        <input type="file" name="insurance" accept=".pdf,.jpg,.png" required>
+        <div class="btns-group">
+          <button type="button" class="btn btn-next">Next</button>
+        </div>
+      </div>
+
+      <!-- Step 2: Event Details -->
+      <div class="form-step">
+        <h2>Step 2: Event Details</h2>
+        <label>Event Name</label>
+        <input type="text" name="event_name" required>
+        <label>Event Location</label>
+        <input type="text" name="location" required>
+        <label>Event Day and Date(s)</label>
+        <input type="date" name="event_date" required>
+        <label>Start Time</label>
+        <input type="time" name="start_time" required>
+        <label>Finish Time</label>
+        <input type="time" name="finish_time" required>
+        <label>Anticipated Attendance</label>
+        <input type="number" name="attendance" min="1" required>
+        <label>Setup Date and Time</label>
+        <input type="datetime-local" name="setup_datetime">
+        <label>Clean-up Date and Time</label>
+        <input type="datetime-local" name="cleanup_datetime">
+        <label>Is this a fundraising event?</label>
+        <select name="fundraising">
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
+        <label>If Yes, Purpose of Funds Raised:</label>
+        <textarea name="fundraising_purpose"></textarea>
+        <label>Annual Event (Next Year Tentative Date)</label>
+        <input type="date" name="next_year_date">
+        <label>Wet Weather Alternative (contingency plan)</label>
+        <textarea name="wet_weather"></textarea>
+        <label>Description of Event (purpose & schedule of activities)</label>
+        <textarea name="event_description"></textarea>
+        <div class="btns-group">
+          <button type="button" class="btn btn-prev">Previous</button>
+          <button type="button" class="btn btn-next">Next</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Operations & Facilities -->
+      <div class="form-step">
+        <h2>Step 3: Operations & Facilities</h2>
+        <!-- Food -->
+        <label>Will food be served or sold at the event?</label>
+        <select name="food_served">
+          <option value="No">No</option>
+          <option value="Served">Served</option>
+          <option value="Sold">Sold</option>
+        </select>
+        <label>Details of Food:</label>
+        <textarea name="food_details"></textarea>
+
+        <!-- Alcohol -->
+        <label>Will alcohol be consumed/served/sold?</label>
+        <select name="alcohol">
+          <option value="No">No</option>
+          <option value="Consumed">Consumed</option>
+          <option value="Served">Served</option>
+          <option value="Sold">Sold</option>
+        </select>
+        <label>If served/sold, Liquor Licence Holder:</label>
+        <input type="text" name="liquor_holder">
+        <label>Number of dispensing areas:</label>
+        <input type="number" name="dispensing_areas">
+        <label>Consumption area boundaries:</label>
+        <textarea name="consumption_boundaries"></textarea>
+
+        <!-- Electricity & Generators -->
+        <label>Do you require access to council-controlled electricity?</label>
+        <select name="electricity_access">
+          <option value="No">No</option>
+          <option value="Yes">Yes</option>
+        </select>
+        <label>Details of electricity use:</label>
+        <textarea name="electricity_details"></textarea>
+
+        <label>Will generators be used?</label>
+        <select name="generators">
+          <option value="No">No</option>
+          <option value="Yes">Yes</option>
+        </select>
+        <label>Details of generator use:</label>
+        <textarea name="generator_details"></textarea>
+
+        <!-- Toilets -->
+        <label>Will additional portable toilets be provided?</label>
+        <select name="toilets">
+          <option value="No">No</option>
+          <option value="Yes">Yes</option>
+        </select>
+        <label>Number of Toilets - Male</label>
+        <input type="number" name="toilets_male">
+        <label>Number of Toilets - Female</label>
+        <input type="number" name="toilets_female">
+        <label>Number of Toilets - Accessible</label>
+        <input type="number" name="toilets_disabled">
+
+        <!-- Waste -->
+        <label>Will additional bins be provided?</label>
+        <select name="bins_provided">
+          <option value="No">No</option>
+          <option value="Yes">Yes</option>
+        </select>
+        <label>Details of waste management plan:</label>
+        <textarea name="waste_plan"></textarea>
+
+        <!-- Structures -->
+        <label>Will temporary structures be used?</label>
+        <select name="structures">
+          <option value="No">No</option>
+          <option value="Yes">Yes</option>
+        </select>
+        <label>Details:</label>
+        <textarea name="structures_details"></textarea>
+
+        <!-- Amusement -->
+        <label>Will amusement devices be operated?</label>
+        <select name="amusement_devices">
+          <option value="No">No</option>
+          <option value="Yes">Yes</option>
+        </select>
+        <label>If yes, details:</label>
+        <textarea name="amusement_details"></textarea>
+
+        <!-- Animals -->
+        <label>Are animals part of the event program?</label>
+        <select name="animals">
+          <option value="No">No</option>
+          <option value="Yes">Yes</option>
+        </select>
+        <label>If yes, provide details:</label>
+        <textarea name="animal_details"></textarea>
+
+        <div class="btns-group">
+          <button type="button" class="btn btn-prev">Previous</button>
+          <button type="button" class="btn btn-next">Next</button>
+        </div>
+      </div>
+
+      <!-- Step 4: Logistics & Risk -->
+      <div class="form-step">
+        <h2>Step 4: Logistics & Risk</h2>
+        <!-- Parking -->
+        <label>Will parking be provided for attendees?</label>
+        <select name="parking">
+          <option value="Existing">Use existing public parking</option>
+          <option value="Temporary">Provide temporary parking</option>
+          <option value="No">No specific parking</option>
+        </select>
+        <label>Parking details:</label>
+        <textarea name="parking_details"></textarea>
+
+        <!-- First Aid -->
+        <label>Will First Aid services be available?</label>
+        <select name="first_aid">
+          <option value="No">No</option>
+          <option value="Yes">Yes</option>
+        </select>
+        <label>First Aid details:</label>
+        <textarea name="first_aid_details"></textarea>
+
+        <!-- Emergency Services -->
+        <label>Have emergency services been notified?</label>
+        <select name="emergency_notified">
+          <option value="No">No</option>
+          <option value="Yes">Yes</option>
+        </select>
+        <label>Details:</label>
+        <textarea name="emergency_details"></textarea>
+
+        <!-- Security -->
+        <label>Will security personnel be engaged?</label>
+        <select name="security">
+          <option value="No">No</option>
+          <option value="Yes">Yes</option>
+        </select>
+        <label>Security details:</label>
+        <textarea name="security_details"></textarea>
+
+        <!-- Noise -->
+        <label>Will amplified music/PA systems be used?</label>
+        <select name="noise">
+          <option value="No">No</option>
+          <option value="Yes">Yes</option>
+        </select>
+        <label>Noise management plan:</label>
+        <textarea name="noise_plan"></textarea>
+
+        <!-- Lighting -->
+        <label>Will temporary lighting be installed?</label>
+        <select name="lighting">
+          <option value="No">No</option>
+          <option value="Yes">Yes</option>
+        </select>
+        <label>Lighting details:</label>
+        <textarea name="lighting_details"></textarea>
+
+        <!-- Site Map Upload -->
+        <label>Upload Site Map</label>
+        <input type="file" name="site_map" accept=".pdf,.jpg,.png">
+
+        <div class="btns-group">
+          <button type="button" class="btn btn-prev">Previous</button>
+          <button type="button" class="btn btn-next">Next</button>
+        </div>
+      </div>
+
+      <!-- Step 5: Community & Compliance -->
+      <div class="form-step">
+        <h2>Step 5: Community & Compliance</h2>
+        <!-- Consultation -->
+        <label>Have residents/businesses been consulted?</label>
+        <select name="community_consultation">
+          <option value="No">No</option>
+          <option value="Yes">Yes</option>
+        </select>
+        <label>Consultation details:</label>
+        <textarea name="consultation_details"></textarea>
+
+        <!-- Cultural -->
+        <label>Does event involve cultural/religious activities?</label>
+        <select name="cultural_considerations">
+          <option value="No">No</option>
+          <option value="Yes">Yes</option>
+        </select>
+        <label>Cultural details:</label>
+        <textarea name="cultural_details"></textarea>
+
+        <!-- Accessibility -->
+        <label>Accessibility plan:</label>
+        <textarea name="accessibility_plan"></textarea>
+
+        <!-- Sustainability -->
+        <label>Will sustainable practices be implemented?</label>
+        <select name="sustainability">
+          <option value="No">No</option>
+          <option value="Yes">Yes</option>
+        </select>
+        <label>Sustainability details:</label>
+        <textarea name="sustainability_details"></textarea>
+
+        <!-- Notifications -->
+        <label>How will residents be notified of disruptions?</label>
+        <textarea name="notification_plan"></textarea>
+
+        <!-- Volunteers -->
+        <label>Will volunteers be involved?</label>
+        <select name="volunteers">
+          <option value="No">No</option>
+          <option value="Yes">Yes</option>
+        </select>
+        <label>Volunteer details:</label>
+        <textarea name="volunteer_details"></textarea>
+
+        <div class="btns-group">
+          <button type="button" class="btn btn-prev">Previous</button>
+          <button type="button" class="btn btn-next">Next</button>
+        </div>
+      </div>
+
+      <!-- Step 6: Declaration -->
+      <div class="form-step">
+        <h2>Step 6: Declaration & Submit</h2>
+        <p>Please confirm:</p>
+        <label>
+          <input type="checkbox" required>
+          I declare the information is true and correct.
+        </label>
+
+        <label>Full Name (Digital Signature)</label>
+        <input type="text" name="digital_signature" required>
+
+        <label>Date</label>
+        <input type="date" name="declaration_date" required>
+
+        <div class="btns-group">
+          <button type="button" class="btn btn-prev">Previous</button>
+          <button type="submit" class="btn">Submit</button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+
+  <!--<script src="{{ url_for('static', filename='js/form.js') }}"></script> -->
+  <script src="static/js/form.js"></script>
+</body>
+</html>

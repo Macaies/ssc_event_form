@@ -1,0 +1,243 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="form-wrapper fade-in">
+  <h1>Event Application Form</h1>
+
+  <!-- novalidate prevents the browser from blocking submit due to hidden required fields -->
+  <form id="multiStepForm" action="{{ url_for('submit') }}" method="POST" enctype="multipart/form-data" novalidate>
+
+    <!-- Progress Bar -->
+    <div class="progressbar">
+      <div class="progress-step active" data-title="Event Details"></div>
+      <div class="progress-step" data-title="Location"></div>
+      <div class="progress-step" data-title="Schedule"></div>
+      <div class="progress-step" data-title="Attendance"></div>
+      <div class="progress-step" data-title="Activities"></div>
+      <div class="progress-step" data-title="Documents"></div>
+      <div class="progress-step" data-title="Summary"></div>
+    </div>
+
+    <!-- Step 1: Event Details -->
+    <div class="form-step active fade-slide">
+      <h2>Step 1: Event Details</h2>
+
+      <label>Event Name
+        <input type="text" id="event_name" name="event_name" required />
+      </label>
+
+      <label>Event Type
+        <select name="event_type" required>
+          <option value="">-- Select --</option>
+            {% for et in event_types %}
+          <option value="{{ et }}">{{ et }}</option>
+            {% endfor %}
+          </select>
+      </label>
+
+
+      <label>Organizer Name
+        <input type="text" name="organizer_name" required />
+      </label>
+
+      <label>Contact Email
+        <input type="email" name="contact_email" required />
+      </label>
+
+      <label>Contact Phone
+        <input type="tel" name="contact_phone" required />
+      </label>
+
+      <div class="btns-group">
+        <button type="button" class="btn btn-next">Next</button>
+      </div>
+    </div>
+
+<!-- Step 2: Location -->
+<div class="form-step fade-slide">
+  <h2>Step 2: Event Location</h2>
+
+  <label>Venue / Park / Reserve
+    <input type="text" id="venue" name="venue" list="venue-list" placeholder="Select on map or type..." required />
+  </label>
+
+  <datalist id="venue-list">
+  {% for loc in locations %}
+    <option value="{{ loc }}"></option>
+  {% endfor %}
+  </datalist>
+
+
+  <!-- Optional: seed with a few known parks; add more as you go -->
+  <datalist id="venue-list">
+    <option value="Cotton Tree Park"></option>
+    <option value="Kings Beach Park"></option>
+    <option value="Maroochy Regional Bushland Botanic Garden"></option>
+    <option value="Apex Park Buderim"></option>
+  </datalist>
+
+  <div class="inline-actions" style="margin:6px 0 12px;">
+    <button type="button" id="btnFindOnMap" class="btn">Find on map</button>
+    <small style="margin-left:8px;color:#666;">Uses the typed venue/address to pan the map</small>
+  </div>
+
+  <div id="conflict-banner" class="status-msg" aria-live="polite" style="margin-top:6px;"></div>
+
+  <label>Address (optional)
+    <input type="text" id="venue_address" name="venue_address" placeholder="If different from above" />
+  </label>
+
+  <div class="form-row">
+    <label>Pick the exact location on the map</label>
+    <div id="map" style="height: 380px; border-radius: 10px; overflow: hidden; border: 1px solid #ddd;"></div>
+    <small>Click the map (or type &amp; press “Find on map”). We’ll record the exact point.</small>
+  </div>
+
+  <!-- Hidden GIS fields -->
+  <input type="hidden" id="latitude" name="latitude">
+  <input type="hidden" id="longitude" name="longitude">
+  <input type="hidden" id="arcgis_feature_id" name="arcgis_feature_id">
+  <input type="hidden" id="arcgis_feature_name" name="arcgis_feature_name">
+  <input type="hidden" id="arcgis_layer" name="arcgis_layer">
+
+  <label>Will vehicles need access to the park/reserve?
+    <select name="vehicle_access" required>
+      <option value="No" selected>No</option>
+      <option value="Yes">Yes</option>
+    </select>
+  </label>
+
+  <div class="btns-group">
+    <button type="button" class="btn btn-prev">Previous</button>
+    <button type="button" class="btn btn-next">Next</button>
+  </div>
+</div>
+
+
+    <!-- Step 3: Schedule -->
+    <div class="form-step fade-slide">
+      <h2>Step 3: Schedule</h2>
+
+      <label>Start Date
+        <input type="date" id="start_date" name="start_date" required />
+      </label>
+
+      <label>End Date
+        <input type="date" id="end_date" name="end_date" required />
+      </label>
+
+      <label>Start Time
+        <input type="time" id="start_time" name="start_time" required />
+      </label>
+
+      <label>End Time
+        <input type="time" id="end_time" name="end_time" required />
+      </label>
+
+      <label>How many total event days?
+        <input type="number" id="total_days" name="total_days" min="1" required />
+      </label>
+
+      <div id="leadtimeHint" class="message-box message-warning" style="display:none;"></div>
+
+      <div class="btns-group">
+        <button type="button" class="btn btn-prev">Previous</button>
+        <button type="button" class="btn btn-next">Next</button>
+      </div>
+    </div>
+
+    <!-- Step 4: Attendance -->
+    <div class="form-step fade-slide">
+      <h2>Step 4: Attendance</h2>
+
+      <label>Expected number of attendees (max at one time)
+        <input type="number" id="attendance" name="attendance" min="1" required />
+      </label>
+
+      <label>Will alcohol be served or consumed?
+        <select name="alcohol" required>
+          <option value="No" selected>No</option>
+          <option value="Yes">Yes</option>
+        </select>
+      </label>
+
+      <div class="btns-group">
+        <button type="button" class="btn btn-prev">Previous</button>
+        <button type="button" class="btn btn-next">Next</button>
+      </div>
+    </div>
+
+    <!-- Step 5: Activities -->
+    <div class="form-step fade-slide">
+      <h2>Step 5: Activities</h2>
+
+      <label>Will your event include fireworks, firearms, or high-risk activities?
+        <select name="high_risk" required>
+          <option value="No" selected>No</option>
+          <option value="Yes">Yes</option>
+        </select>
+      </label>
+
+      <label>Will amplified sound be used?
+        <select name="amplified_sound" required>
+          <option value="No" selected>No</option>
+          <option value="Yes">Yes</option>
+        </select>
+      </label>
+
+      <label>If Yes, what is the maximum noise level (dBC @ 15m)?
+        <input type="number" id="noise_level" name="noise_level" min="0" placeholder="e.g. 95" />
+      </label>
+
+      <label>Do you require road closures or traffic management?
+        <select name="traffic_mgmt" required>
+          <option value="No" selected>No</option>
+          <option value="Yes">Yes</option>
+        </select>
+      </label>
+
+      <div class="btns-group">
+        <button type="button" class="btn btn-prev">Previous</button>
+        <button type="button" class="btn btn-next">Next</button>
+      </div>
+    </div>
+
+    <!-- Step 6: Documents -->
+    <div class="form-step fade-slide">
+      <h2>Step 6: Upload Required Documents</h2>
+
+      <label>Public Liability Insurance (minimum $20M)
+        <input type="file" name="insurance_doc" required />
+      </label>
+
+      <label>Site Map
+        <input type="file" name="site_map" required />
+      </label>
+
+      <label>Other Permits/Certificates
+        <input type="file" name="other_docs" />
+      </label>
+
+      <div class="btns-group">
+        <button type="button" class="btn btn-prev">Previous</button>
+        <button type="button" class="btn btn-next">Next</button>
+      </div>
+    </div>
+
+    <!-- Step 7: Summary & Classification -->
+    <div class="form-step fade-slide">
+      <h2>Step 7: Summary &amp; Classification</h2>
+      <p>This is your final check before submitting. We’ll auto-detect Self-assessable vs Assessable.</p>
+
+      <ul id="checklist-summary" class="checklist"></ul>
+
+      <p><strong>Classification:</strong> <span id="classification-result">Pending...</span></p>
+
+      <div class="btns-group">
+        <button type="button" class="btn btn-prev">Previous</button>
+        <button type="submit" class="btn">Submit Application</button>
+      </div>
+    </div>
+
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: ssc-event-form
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: DATABASE_URL
+        sync: false   # set in Render dashboard
+      - key: SECRET_KEY
+        sync: false
+      - key: UPLOAD_FOLDER
+        value: uploads/
+      - key: GMAPS_API_KEY
+        sync: false

@@ -1,0 +1,476 @@
+/* ---------- Global Reset ---------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  background: #f4f7fa;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* ---------- Header ---------- */
+.site-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #004a8f;
+  color: #fff;
+  padding: 20px;
+  border-bottom: 4px solid #0073e6;
+  text-align: center;
+}
+
+.site-header .logo {
+  height: 80px;
+  max-width: 100%;
+  margin-bottom: 10px;
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+.site-header .logo:hover {
+  transform: scale(1.05);
+}
+
+.site-title {
+  margin-top: 10px;
+  font-size: 1.8rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: #fff;
+}
+
+/* ---------- Main Container ---------- */
+.site-main {
+  max-width: 1100px;
+  margin: 30px auto;
+  padding: 20px;
+}
+
+/* ---------- Buttons ---------- */
+.btn, .btn-export, .search-form button, .btn-calendar {
+  background: #0073e6;
+  color: white;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 14px;
+  transition: background 0.2s ease;
+}
+
+.btn:hover, .btn-export:hover, .search-form button:hover, .btn-calendar:hover {
+  background: #005bb5;
+}
+
+.clear-search {
+  margin-left: 8px;
+  color: #ff3333;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+/* ---------- Progress Bar ---------- */
+.progressbar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  counter-reset: step;
+}
+
+.progress-step {
+  width: 100%;
+  text-align: center;
+  position: relative;
+}
+
+.progress-step::before {
+  counter-increment: step;
+  content: counter(step);
+  width: 35px;
+  height: 35px;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  display: inline-block;
+  line-height: 35px;
+  background: white;
+  margin-bottom: 5px;
+}
+
+.progress-step.active::before {
+  border-color: #0073e6;
+  background: #0073e6;
+  color: white;
+  font-weight: bold;
+}
+
+.progress-step[data-title]::after {
+  content: attr(data-title);
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  color: #666;
+}
+
+/* ---------- Forms ---------- */
+form {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+form h2 {
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+  color: #004a8f;
+}
+
+form label {
+  display: block;
+  margin: 10px 0 5px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+form input, form select, form textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+form textarea {
+  min-height: 70px;
+  resize: vertical;
+}
+
+.btns-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+input.error, select.error, textarea.error {
+  border-color: #f44336;
+  background-color: #fff5f5;
+}
+
+/* ---------- Success Page ---------- */
+.success-container {
+  background: white;
+  max-width: 600px;
+  margin: 60px auto;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 5px 14px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.success-container h1 {
+  color: #2ecc71;
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+}
+
+.success-container p {
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+.success-container .btn {
+  background: #2ecc71;
+}
+
+.success-container .btn:hover {
+  background: #27ae60;
+}
+
+/* ---------- Admin Dashboard ---------- */
+.admin-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.search-form {
+  display: flex;
+  align-items: center;
+}
+
+.search-form input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-right: 6px;
+}
+
+.table-card {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+table th, table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+table th {
+  background: #004a8f;
+  color: white;
+}
+
+table tbody tr:nth-child(even) {
+  background: #f9f9f9;
+}
+
+table tbody tr:hover {
+  background: #eef5ff;
+}
+
+.file-link {
+  color: #0073e6;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.file-link:hover {
+  text-decoration: underline;
+}
+
+/* ---------- Admin Table Actions ---------- */
+.table-card td .btn,
+.table-card td .btn-danger {
+  display: inline-block;
+  padding: 6px 12px;
+  font-size: 13px;
+  margin: 2px;
+  border-radius: 5px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.table-card td .btn {
+  background: #2ecc71;
+  color: white;
+}
+.table-card td .btn:hover {
+  background: #27ae60;
+}
+
+.table-card td .btn-danger {
+  background: #e74c3c;
+  color: white;
+}
+.table-card td .btn-danger:hover {
+  background: #c0392b;
+}
+
+/* Status labels */
+.status-label {
+  padding: 6px 10px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 4px;
+  display: inline-block;
+}
+.status-confirmed {
+  background: #eafaf1;
+  color: #2ecc71;
+  border: 1px solid #2ecc71;
+}
+.status-rejected {
+  background: #fdecea;
+  color: #e74c3c;
+  border: 1px solid #e74c3c;
+}
+.status-pending {
+  background: #fff6e5;
+  color: #e67e22;
+  border: 1px solid #e67e22;
+}
+
+/* ---------- Checklist Summary (Step 7) ---------- */
+.checklist {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.checklist li {
+  padding: 10px 14px;
+  margin-bottom: 8px;
+  border-radius: 6px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.checklist li.ok {
+  background: #e9f9f0;
+  color: #2e7d32;
+  border-left: 4px solid #2ecc71;
+}
+
+.checklist li.fail {
+  background: #ffeaea;
+  color: #c62828;
+  border-left: 4px solid #e74c3c;
+}
+
+.checklist li::before {
+  content: "✔";
+  margin-right: 8px;
+  font-weight: bold;
+  color: inherit;
+}
+
+.checklist li.fail::before {
+  content: "✖";
+}
+
+/* Hover effect */
+.checklist li:hover {
+  transform: translateX(3px);
+}
+
+/* ---------- Calendar Section ---------- */
+.calendar-container {
+  margin-top: 30px;
+  padding: 20px;
+  background: #fdfdfd;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.calendar-container h3 {
+  text-align: center;
+  margin-bottom: 15px;
+  color: #004a8f;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+
+.calendar-cell {
+  padding: 15px 0;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.calendar-cell.available {
+  background: #e8f4ff;
+  border: 1px solid #90caf9;
+  color: #004a8f;
+}
+
+.calendar-cell.booked {
+  background: #ffeaea;
+  border: 1px solid #ef9a9a;
+  color: #c62828;
+  cursor: not-allowed;
+}
+
+.calendar-cell.selected {
+  background: #2ecc71;
+  border: 1px solid #27ae60;
+  color: white;
+  font-weight: bold;
+}
+
+.calendar-cell:hover:not(.booked) {
+  background: #b3e5fc;
+  transform: scale(1.05);
+}
+
+/* ---------- Messaging ---------- */
+.message-box {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 15px 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.message-success {
+  border-left: 5px solid #2ecc71;
+}
+
+.message-warning {
+  border-left: 5px solid #f1c40f;
+}
+
+.message-error {
+  border-left: 5px solid #e74c3c;
+}
+
+/* ---------- Animations ---------- */
+.fade-in {
+  animation: fadeIn 1s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.form-step {
+  display: none;
+  opacity: 0;
+  transform: translateX(40px);
+  transition: all 0.4s ease;
+}
+
+.form-step.active {
+  display: block;
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.fade-slide {
+  animation: fadeSlide 0.5s ease-in-out;
+}
+
+@keyframes fadeSlide {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Calendar Colors ---------- */
+.self-event {
+  background-color: #2ecc71 !important; /* green */
+  border-color: #27ae60 !important;
+  color: white !important;
+}
+.assess-event {
+  background-color: #e67e22 !important; /* orange */
+  border-color: #d35400 !important;
+  color: white !important;
+}

@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="success-container fade-in">
+  <h1>✅ Application Submitted</h1>
+
+  <p>Thank you, <strong>{{ request.args.get('applicant_name', 'Applicant') }}</strong>.
+     Your event <strong>"{{ request.args.get('event_name', 'Your Event') }}"</strong> has been submitted.</p>
+
+  <!-- Classification -->
+  <h3>📋 Event Classification</h3>
+  {% if classification == "Self-assessable" %}
+    {% if request.args.get('conflict') == '1' %}
+      <p><span class="status-label status-pending">Self-assessable (Pending)</span>
+         – Your event meets self-assessable criteria, but the chosen time/location conflicts with an existing booking.
+         A staff member will review it.</p>
+    {% else %}
+      <p><span class="status-label status-confirmed">Self-assessable</span>
+         – Your event meets self-assessable criteria and has been auto-scheduled.</p>
+    {% endif %}
+  {% else %}
+    <p><span class="status-label status-pending">Assessable</span>
+       – Your event requires Council staff review. You will be contacted soon.</p>
+  {% endif %}
+
+  <!-- Conflict / Reservation note -->
+  {% if request.args.get('conflict') == '1' %}
+    <p><span class="status-label status-rejected">Conflict</span>
+       – Another booking exists at this location/date. Your submission is recorded and marked <strong>Pending</strong> for review.</p>
+  {% else %}
+    {% if classification == "Self-assessable" %}
+      <p><span class="status-label status-confirmed">Reserved</span>
+         – Your time has been placed on the calendar.</p>
+    {% endif %}
+  {% endif %}
+
+  <!-- Quick recap (optional; relies on form fields present in request.args if you pass them) -->
+  <div class="table-card" style="margin:18px 0;">
+    <table>
+      <tbody>
+        <tr><th style="text-align:left;">Event</th><td>{{ request.args.get('event_name', '-') }}</td></tr>
+        <tr><th style="text-align:left;">Applicant</th><td>{{ request.args.get('applicant_name', '-') }}</td></tr>
+        <!-- If you want to surface dates/times, you can pass them in the redirect and show here -->
+        {# <tr><th>When</th><td>{{ request.args.get('start') }} – {{ request.args.get('end') }}</td></tr> #}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Next Steps -->
+  <h3>Next Steps</h3>
+  <ul class="checklist">
+    <li class="ok">You will receive a confirmation email shortly.</li>
+    <li class="ok">Council will review your event within 5 business days.</li>
+    {% if classification == "Assessable" or request.args.get('conflict') == '1' %}
+      <li class="fail">Additional documents or date/time adjustments may be requested.</li>
+    {% endif %}
+  </ul>
+
+  <!-- Actions -->
+  <a href="{{ url_for('index') }}" class="btn">Submit Another Application</a>
+  <a href="{{ url_for('calendar_view') }}" class="btn-calendar">📅 View Calendar</a>
+</div>
+{% endblock %}

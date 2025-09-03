@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}SCC – Events Calendar{% endblock %}
+
+{% block content %}
+<div class="site-main fade-in">
+  <h2>Events Calendar</h2>
+
+  <!-- Legend -->
+  <div class="calendar-legend" style="display:flex; gap:16px; align-items:center; margin:10px 0 16px;">
+    <span style="display:flex; align-items:center; gap:8px;">
+      <i style="display:inline-block; width:14px; height:14px; background:#2e7d32; border-radius:3px;"></i> Approved
+    </span>
+    <span style="display:flex; align-items:center; gap:8px;">
+      <i style="display:inline-block; width:14px; height:14px; background:#ef6c00; border-radius:3px;"></i> Pending
+    </span>
+    <span style="display:flex; align-items:center; gap:8px;">
+      <i style="display:inline-block; width:14px; height:14px; background:#c62828; border-radius:3px;"></i> Rejected / Cancelled
+    </span>
+  </div>
+
+  <!-- Calendar -->
+  <div id="calendar"></div>
+</div>
+
+<!-- FullCalendar (CDN) -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.14/index.global.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.14/index.global.min.js"></script>
+
+<!-- Tooltip styles (simple, lightweight) -->
+<style>
+  #calendar { background:#fff; padding:12px; border-radius:12px; box-shadow: 0 6px 18px rgba(0,0,0,0.08); }
+  .fc .fc-toolbar-title { font-size: 1.25rem; }
+  /* Color classes returned by /api/events */
+  .fc-approved  { background:#2e7d32 !important; border-color:#2e7d32 !important; }
+  .fc-pending   { background:#ef6c00 !important; border-color:#ef6c00 !important; }
+  .fc-rejected  { background:#c62828 !important; border-color:#c62828 !important; }
+
+  /* Lightweight tooltip */
+  .fc-mini-tip {
+    position: fixed;
+    z-index: 9999;
+    background: #111;
+    color: #fff;
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-size: 12px;
+    line-height: 1.35;
+    pointer-events: none;     /* let mouse pass through */
+    max-width: 280px;
+    box-shadow: 0 6px 18px rgba(0,0,0,.25);
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: opacity .12s ease, transform .12s ease;
+    white-space: normal;
+  }
+  .fc-mini-tip.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .fc-mini-tip .tip-title { font-weight: 600; margin-bottom: 4px; display:block; }
+  .fc-mini-tip .tip-meta  { opacity: .9; }
+</style>
+
+<!-- Your calendar JS -->
+<script src="{{ url_for('static', filename='js/calendar.js') }}"></script>
+{% endblock %}

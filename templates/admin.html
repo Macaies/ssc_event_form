@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="site-main fade-in">
+  <h2>Admin Dashboard</h2>
+
+  <!-- Actions -->
+  <div class="admin-actions">
+    <form method="get" action="{{ url_for('admin') }}" class="search-form">
+      <input type="text" name="q" placeholder="Search by name, type..." value="{{ request.args.get('q', '') }}">
+      <button type="submit">Search</button>
+      {% if request.args.get('q') %}
+        <a href="{{ url_for('admin') }}" class="clear-search">Clear</a>
+      {% endif %}
+    </form>
+
+    <div>
+      <a href="{{ url_for('export_data', format='csv') }}" class="btn-export">Export CSV</a>
+      <a href="{{ url_for('export_data', format='xlsx') }}" class="btn-export">Export Excel</a>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div style="margin-bottom: 15px;">
+    <a href="{{ url_for('admin') }}" class="btn">All</a>
+    <a href="{{ url_for('admin', status='Self-assessable') }}" class="btn">Self-assessable</a>
+    <a href="{{ url_for('admin', status='Assessable') }}" class="btn">Assessable</a>
+    <a href="{{ url_for('admin', status='Confirmed') }}" class="btn">Confirmed</a>
+    <a href="{{ url_for('admin', status='Pending') }}" class="btn">Pending</a>
+    <a href="{{ url_for('admin', status='Rejected') }}" class="btn">Rejected</a>
+  </div>
+
+  <!-- Table -->
+  <div class="table-card">
+    <table>
+      <thead>
+        <tr>
+          <th>Applicant</th>
+          <th>Event Type</th>
+          <th>Date</th>
+          <th>Location</th>
+          <th>Status / Actions</th>
+          <th>Files</th>
+          <th>Submitted</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for app in applications %}
+        <tr>
+          <td>{{ app["applicant_name"] }}</td>
+          <td>{{ app["event_type"] }}</td>
+          <td>{{ app["start_date"] }}</td>
+          <td>{{ app["location"] }}</td>
+          <td>
+            {% if app["status"] == "Pending" %}
+              <a href="{{ url_for('update_event_status', event_id=app['id'], action='approve') }}" class="btn">Approve</a>
+              <a href="{{ url_for('update_event_status', event_id=app['id'], action='reject') }}" class="btn btn-danger">Reject</a>
+            {% elif app["status"] == "Confirmed" %}
+              <span class="status-label status-confirmed">Confirmed</span>
+            {% elif app["status"] == "Rejected" %}
+              <span class="status-label status-rejected">Rejected</span>
+            {% elif app["classification"] == "Self-assessable" %}
+              <span class="status-label status-confirmed">Self-assessable</span>
+            {% elif app["classification"] == "Assessable" %}
+              <span class="status-label status-pending">Assessable</span>
+            {% endif %}
+          </td>
+          <td>
+            {% if app["insurance_file"] %}
+              <a href="{{ url_for('uploaded_file', filename=app['insurance_file']) }}" class="file-link">Insurance</a><br>
+            {% endif %}
+            {% if app["site_map"] %}
+              <a href="{{ url_for('uploaded_file', filename=app['site_map']) }}" class="file-link">Site Map</a>
+            {% else %}
+              -
+            {% endif %}
+          </td>
+          <td>{{ app["created_at"] }}</td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="7" style="text-align:center; color:#888;">No applications found.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+
