@@ -1,72 +1,69 @@
-# ssc_form
-1. System Flow (User Journey)
+⃣ System Flow – User Journey
 Applicant User
-     |
-     v
+     ↓
 [7-Step Wizard Form]
-     |
-     |--> Validation (email, phone, required fields)
-     v
-[Decision Engine]
-   |  \
-   |   \
-   |    --> Assessable --> Marked for Admin Review
-   v
-Self-Assessable --> Auto-Approved --> Calendar (Public)
+     ↓
+Validation (email, phone, required fields)
+     ↓
+Decision Engine
+     ├─ Assessable → Marked for Admin Review
+     └─ Self-Assessable → Auto-Approved → Calendar (Public)
 
-🔹 2. Data Flow
+
+
+2️⃣ Data Flow
 [Applicant Form Submission]
-        |
-        v
+        ↓
 +-------------------------+
 |  Flask Application      |
 |  - app.py               |
 |  - auth.py              |
 +-------------------------+
-        |
-        v
-[SQLite Database app.db]
-        |
-        +--> Applications Table (all submissions)
-        +--> Events Table (approved events)
-        |
-        v
+        ↓
+[SQLite Database: app.db]
+        ├─ Applications Table (all submissions)
+        ├─ Events Table (approved events)
+        ↓
 Frontend Views:
-- Calendar.html (FullCalendar, reads Events table)
-- Admin.html (reads Applications table)
+- calendar.html (FullCalendar, reads Events table)
+- admin.html (reads Applications table)
 
-🔹 3. System Components Diagram
-         +------------------------+
-         |   Applicant (Frontend) |
-         | HTML + JS (Wizard)     |
-         +-----------+------------+
-                     |
-                     v
-              [Flask Web App]
-   +-----------------------------------+
-   | app.py (routes, logic)           |
-   | auth.py (login/admin)            |
-   | location.py (venues API)         |
-   | form.js, location.js (wizard, UI)|
-   +-----------------------------------+
-                     |
-                     v
-              [SQLite Database]
-       +-------------------------------+
-       | applications (submissions)    |
-       | events (approved for calendar)|
-       | users (login roles)           |
-       +-------------------------------+
 
-🔹 4. Admin Interaction Flow
+
+3️⃣ System Components Diagram
++-----------------------------+
+| Applicant (Frontend)       |
+| HTML + JS (Wizard Form)    |
++-------------+--------------+
+              ↓
+       [Flask Web App]
++-----------------------------------+
+| app.py         → routes, logic    |
+| auth.py        → login/admin      |
+| location.py    → venues API       |
+| form.js        → wizard UI        |
+| location.js    → location picker  |
++-----------------------------------+
+              ↓
+       [SQLite Database]
++-----------------------------------+
+| applications → all submissions    |
+| events       → approved events    |
+| users        → login roles        |
++-----------------------------------+
+
+
+
+4️⃣ Admin Interaction Flow
 Admin User
-   |
-   v
-[Login Page] --> Verify (SQLite: users table)
-   |
-   v
+     ↓
+[Login Page] → Verify (SQLite: users table)
+     ↓
 [Admin Dashboard]
-   |
-   |--> View Applications (all)
-   |--> Review Assessable Submissions
-   |--> Monitor Approved Events
+     ├─ View Applications (all)
+     ├─ Review Assessable Submissions
+     └─ Monitor Approved Events
+
+
+
+
