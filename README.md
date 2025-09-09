@@ -1,4 +1,4 @@
-Here’s the full README.md:
+
 
 # 🌐 Event Permit System – Proof of Concept (PoC)
 
