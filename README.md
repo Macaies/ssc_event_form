@@ -1,4 +1,26 @@
-1. System Flow – Applicant Journey
+Here’s the full README.md:
+
+# 🌐 Event Permit System – Proof of Concept (PoC)
+
+This repository demonstrates a **Self-Service Land Permit PoC** for **Sunshine Coast Council**.  
+It streamlines the event permit process with applicant self-submission, admin review, and public calendar integration.
+
+---
+
+## 🚀 Features
+
+- 📝 **Multi-step wizard form** (Applicants)  
+- ⚖️ **Decision Engine** → Auto-approve *Self-Assessable* events / Review *Assessable* events  
+- 📅 **Public Calendar Integration** (FullCalendar.js)  
+- 🔑 **Role-based login** (Applicants / Admin)  
+- 🗄️ **SQLite Database** for applications, events, and users  
+- 📊 **Admin Dashboard** to review submissions & monitor approved events  
+
+---
+
+## 📌 1. Applicant System Flow
+
+```mermaid
 flowchart TD
     A[Applicant User] --> B[7-Step Wizard Form]
     B --> C[Validation: email, phone, required fields]
@@ -57,15 +79,3 @@ flowchart TD
     D --> E[View Applications (all)]
     D --> F[Review Assessable Submissions]
     D --> G[Monitor Approved Events]
-
-✅ Features
-
-🔹 Multi-step wizard form (applicants)
-
-🔹 Auto-approve Self-Assessable events
-
-🔹 Admin review for Assessable events
-
-🔹 Public calendar integration (FullCalendar.js)
-
-🔹 Role-based login (Applicants / Admin)
